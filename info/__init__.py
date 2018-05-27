@@ -7,7 +7,6 @@ from flask_session import Session
 from config import configs
 import logging
 from logging.handlers import RotatingFileHandler
-from info.modules.index import index_blue
 
 
 def setup_log(level):
@@ -26,6 +25,7 @@ def setup_log(level):
 
 # 创建SQLAlchemy对象
 db = SQLAlchemy()
+redis_store = None
 
 
 def create_app(config_name):
@@ -46,6 +46,8 @@ def create_app(config_name):
     db.init_app(app)
 
     # 创建连接到redis数据库的对象
+    # 创建全局变量
+    global redis_store
     redis_store = StrictRedis(host=configs[config_name].REDIS_HOST, port=configs[config_name].REDIS_PORT)
 
     # 开启CSRF保护：因为项目中的表单不再使用FlaskForm来实现，所以不会自动的开启CSRF保护，需要自己开启
@@ -55,5 +57,8 @@ def create_app(config_name):
     Session(app)
 
     # 注册路由
+    # 蓝图:哪里导入哪里使用
+    from info.modules.index import index_blue
+
     app.register_blueprint(index_blue)
     return app
