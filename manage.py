@@ -3,7 +3,7 @@ from flask_migrate import Migrate, MigrateCommand
 # from info import app, db
 from info import create_app, db
 
-
+# 创建app
 app = create_app('dev')
 
 # 创建脚本管理器对象
@@ -14,12 +14,7 @@ Migrate(app, db)
 manager.add_command('mysql', MigrateCommand)
 
 
-@app.route('/')
-def index():
-
-    return 'index'
-
-
 if __name__ == '__main__':
+    print(app.url_map)
 
     manager.run()

@@ -7,6 +7,7 @@ from flask_session import Session
 from config import configs
 import logging
 from logging.handlers import RotatingFileHandler
+from info.modules.index import index_blue
 
 
 def setup_log(level):
@@ -53,4 +54,6 @@ def create_app(config_name):
     # 指定session数据存储在后端的位置
     Session(app)
 
+    # 注册路由
+    app.register_blueprint(index_blue)
     return app
