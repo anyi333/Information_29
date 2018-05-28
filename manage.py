@@ -1,7 +1,7 @@
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 # from info import app, db
-from info import create_app, db,models #为了在迁移时让manage知道models的存在
+from info import create_app, db, models # 这里导入models仅仅是为了在迁移时，让manage知道models的存在
 
 
 # 创建app
@@ -17,5 +17,4 @@ manager.add_command('mysql', MigrateCommand)
 
 if __name__ == '__main__':
     print(app.url_map)
-
     manager.run()
