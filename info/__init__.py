@@ -48,7 +48,7 @@ def create_app(config_name):
     # 创建连接到redis数据库的对象
     # 创建全局变量
     global redis_store
-    redis_store = StrictRedis(host=configs[config_name].REDIS_HOST, port=configs[config_name].REDIS_PORT)
+    redis_store = StrictRedis(host=configs[config_name].REDIS_HOST, port=configs[config_name].REDIS_PORT, decode_responses=True)
 
     # 开启CSRF保护：因为项目中的表单不再使用FlaskForm来实现，所以不会自动的开启CSRF保护，需要自己开启
     CSRFProtect(app)
