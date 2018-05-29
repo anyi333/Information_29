@@ -154,10 +154,29 @@ $(function(){
         }
 
         // 发起注册请求
+        var params = {
+            'mobile':mobile,
+            'smscode':smscode,
+            'password':password
+        };
 
+        $.ajax({
+            url:'/passport/register', // 请求地址
+            type:'post', // 请求方法
+            data:JSON.stringify(params), // 请求参数
+            contentType:'application/json',
+            headers:{'X-CSRFToken':getCookie('csrf_token')}, // 在请求头中带上csrf_token
+            success:function (response) {
+                if (response.errno == '0') {
+                    // 注册成功
+                    location.reload();
+                } else {
+                    alert(response.errmsg);
+                }
+            }
+        });
     })
-})
-
+});
 // uuid
 var imageCodeId = "";
 

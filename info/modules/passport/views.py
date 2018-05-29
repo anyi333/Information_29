@@ -50,8 +50,10 @@ def register():
     user = User()
     user.mobile = mobile
     user.nick_name = mobile
-    # TODO 密码需要加密后再存储
-    # user.password_hash = password
+    # 密码需要加密后再存储
+    # 方案三:在模型类中新增一个属性叫做password,
+    # 并加载setter和getter方法,调用setter方法,直接完成密码的加密存储
+    user.password = password
     # 记录最后一次登录的时间
     user.last_login = datetime.datetime.now()
 
@@ -61,6 +63,7 @@ def register():
         db.session.commit()
     except Exception as e:
         current_app.logger.error(e)
+        db.session.rollback()
         return jsonify(errno=response_code.RET.DBERR, errmsg='保存注册数据失败')
 
     # 7.保存session,实现状态保持，注册即登录
@@ -113,9 +116,10 @@ def sms_code():
     # 5.如果对比成功，生成短信验证码，并发送短信
     # '%06d' : 如果不够6位，补0.比如:28-->000028
     sms_code = '%06d' % random.randint(0, 999999)
-    result = CCP().send_template_sms(mobile, [sms_code, 5], 1)
-    if result != 0:
-        return jsonify(errno=response_code.RET.THIRDERR, errmsg='发送短信验证码失败')
+    current_app.logger.debug(sms_code)
+    # result = CCP().send_template_sms(mobile, [sms_code, 5], 1)
+    # if result != 0:
+    #     return jsonify(errno=response_code.RET.THIRDERR, errmsg='发送短信验证码失败')
 
     # 6.存储短信验证码到redis,方便注册时比较
     try:
@@ -147,6 +151,7 @@ def image_code():
 
     # 3.生成图片验证码
     name,text,image = captcha.generate_captcha()
+    current_app.logger.debug(text)
 
     # 4.保存图片验证码到redis
     try:
