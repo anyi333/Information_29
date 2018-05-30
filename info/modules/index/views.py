@@ -1,13 +1,17 @@
 # 主页模块
 from . import index_blue
 from flask import render_template,current_app,session
-from info.models import User
+from info.models import User,News
+from info import constants,response_code
 
 
 @index_blue.route('/')
 def index():
     """主页"""
-    # 当用户已登录展示"用户名 退出",未登录展示"登录  注册"
+    # 1.处理网页右上角的用户展示数据.当用户已登录展示"用户名 退出",未登录展示"登录  注册"
+    # 2.新闻点击排行展示:在news数据库表中查询,根据点击量clicks倒序
+
+
     # 1.处理网页右上角的用户展示数据
     user_id = session.get('user_id',None)
     user = None
@@ -18,9 +22,22 @@ def index():
         except Exception as e:
             current_app.logger.error(e)
 
+    # 2.新闻点击排行展示
+    news_clicks = []
+    try:
+        news_clicks = News.query.order_by(News.clicks.desc()).limit(constants.CLICK_RANK_MAX_NEWS)
+    except Exception as e:
+        current_app.logger.error(e)
+
+
+
+
+
+
     # 构造渲染模板的上下文数据
     context = {
-        'user':user
+        'user':user,
+        'news_clicks':news_clicks
     }
 
     # 渲染主页
