@@ -126,7 +126,7 @@ $(function(){
         };
 
         $.ajax({
-            url:'/password/login',
+            url:'/passport/login',
             type:'post',
             data:JSON.stringify(params),
             contentType:'application/json',
@@ -134,6 +134,7 @@ $(function(){
             success:function (response) {
                 if(response.errno == '0'){
                     // 登录成功后刷新当前页面
+                    location.reload();
                 }else {
                     alert(response.errmsg);
                 }
@@ -200,6 +201,26 @@ $(function(){
         });
     })
 });
+
+//退出登录
+function logout() {
+    // $.ajax({
+    //     url:'passport/logout',
+    //     type:'get'
+    // });
+    // 下面是对上面的封装
+    $.get('/passport/logout',function (response) {
+        if (response.errno == '0'){
+            //退出登录成功
+            location.reload();
+        }else {
+            alert(response.errmsg);
+        }
+    })
+}
+
+
+
 // uuid
 var imageCodeId = "";
 
