@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from redis import StrictRedis
-from flask_wtf.csrf import CSRFProtect
+from flask_wtf.csrf import CSRFProtect,generate_csrf
 from flask_session import Session
 # from config import Config, DevlopmentConfig, ProductionConfig, UnittestConfig
 from config import configs
@@ -50,7 +50,17 @@ def create_app(config_name):
     redis_store = StrictRedis(host=configs[config_name].REDIS_HOST, port=configs[config_name].REDIS_PORT, decode_responses=True)
 
     # 开启CSRF保护：因为项目中的表单不再使用FlaskForm来实现，所以不会自动的开启CSRF保护，需要自己开启
-    # CSRFProtect(app)
+    CSRFProtect(app)
+
+    # 使用请求钩子,实现每个响应中写入到cookie
+    @app.after_request
+    def setup_csrftoken(response):
+        # 生成csrf_token的值
+        csrf_token = generate_csrf()
+
+        # 将csrf_token的值写入到cookie
+        response.set_cookie('csrf_token',csrf_token)
+        return response
 
     # 指定session数据存储在后端的位置
     Session(app)

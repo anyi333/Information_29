@@ -265,6 +265,7 @@ function sendSMSCode() {
         type:'post',                // 请求方法
         data:JSON.stringify(params),// 请求参数
         contentType:'application/json',// 数据类型
+        headers:{'X-CSRFToken':getCookie('csrf_token')}, // 在请求头中带上csrf_token
         success:function (response) {  // 回调函数
             if (response.errno == '0') {
                 // 发送成功后，进行倒计时
