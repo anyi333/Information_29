@@ -44,9 +44,18 @@ $(function () {
 
         if ((canScrollHeight - nowScroll) < 100) {
             // TODO 判断页数，去更新新闻数据
+            if (!data_querying){
+                data_querying = true;
+                // 计算当前在第几页
+                cur_page +=1;
+                if(cur_page < total_page){
+                    // 加载指定页码的新闻数据
+                    updateNewsData();
+                }
+            }
         }
     })
-})
+});
 
 function updateNewsData() {
     // TODO 更新新闻数据
@@ -57,7 +66,12 @@ function updateNewsData() {
     };
 
     $.get('/news_list',params,function (response) {
+        //得到响应后,表示一次加载数据结束了
+        data_querying = false;
+
         if(response.errno == '0'){
+            // 记录总页数
+            total_page = response.data.total_page;
             for (var i=0;i<response.data.news_dict_list.length;i++) {
                 var news = response.data.news_dict_list[i]
                 var content = '<li>'
