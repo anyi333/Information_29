@@ -72,6 +72,11 @@ function updateNewsData() {
         if(response.errno == '0'){
             // 记录总页数
             total_page = response.data.total_page;
+            // 切换分类时,首先清空数据
+            if (cur_page == 1){
+                $('.list_con').html('');
+            }
+
             for (var i=0;i<response.data.news_dict_list.length;i++) {
                 var news = response.data.news_dict_list[i]
                 var content = '<li>'
