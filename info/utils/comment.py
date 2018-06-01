@@ -1,4 +1,7 @@
 #公共的工具文件
+from flask import session,current_app,g
+from info.models import User
+
 
 def do_rank(index):
     '''根据index,返回对应的first,second,third'''
@@ -10,3 +13,39 @@ def do_rank(index):
         return 'third'
     else:
         return ''
+
+
+def user_login_data(view_func):
+    # 使用装饰器的形式获取登录用户信息
+
+    # 提示:wrapper函数会拦截到传给被装饰的函数的参数
+    def wrapper(*args,**kwargs):
+        '''具体获取登录用户信息的逻辑'''
+        user_id = session.get('user_id', None)
+        user = None
+        if user_id:
+            # 表示用户已经登录，然后查询用户的信息
+            try:
+                user = User.query.get(user_id)
+            except Exception as e:
+                current_app.logger.error(e)
+
+        # 使用全局的g变量存储查询出来的登录用户信息
+        g.user = user
+
+        # 执行被装饰的视图函数
+        return view_func(*args,**kwargs)
+    return wrapper
+
+
+# def user_login_data():
+#     '''获取登录用户的信息的函数'''
+#     user_id = session.get('user_id', None)
+#     user = None
+#     if user_id:
+#         # 表示用户已经登录，然后查询用户的信息
+#         try:
+#             user = User.query.get(user_id)
+#         except Exception as e:
+#             current_app.logger.error(e)
+#     return user

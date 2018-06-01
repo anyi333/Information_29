@@ -7,7 +7,6 @@ from flask_session import Session
 from config import configs
 import logging
 from logging.handlers import RotatingFileHandler
-from info.utils.comment import do_rank
 
 
 def setup_log(level):
@@ -22,7 +21,6 @@ def setup_log(level):
     file_log_handler.setFormatter(formatter)
     # 为全局的日志工具对象（flask app使用的）添加日志记录器
     logging.getLogger().addHandler(file_log_handler)
-
 
 # 创建SQLAlchemy对象
 db = SQLAlchemy()
@@ -65,6 +63,7 @@ def create_app(config_name):
 
     # 将自定义的过滤器函数,添加到app的过滤器列表中
     # rank:在模板中使用的别名
+    from info.utils.comment import do_rank
     app.add_template_filter(do_rank,'rank')
 
     # 指定session数据存储在后端的位置
