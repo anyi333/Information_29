@@ -5,7 +5,7 @@ from info.models import User,News
 from info import constants,db,response_code
 from info.utils.comment import user_login_data
 
-@news_blue.route('/news_collect')
+@news_blue.route('/news_collect',methods=['POST'])
 @user_login_data
 def news_collect():
     '''新闻收藏
@@ -26,7 +26,7 @@ def news_collect():
     action = request.json.get('action')
 
     # 3.校验参数
-    if not all(news_id,action):
+    if not all([news_id,action]):
         return jsonify(errno=response_code.RET.PARAMERR,errmsg='缺少参数')
     if action not in ['collect','cancel_collect']:
         return jsonify(errno=response_code.RET.PARAMERR,errmsg='参数错误')
@@ -44,7 +44,7 @@ def news_collect():
     # 5.收藏和取消收藏新闻
     if action == 'collect':
         # 当要收藏的新闻不在用户收藏列表中才需要收藏
-        if news in user.collection_news:
+        if news not in user.collection_news:
             user.collection_news.append(news)
     else:
         # 当要取消收藏的新闻在用户收藏列表中才需要取消收藏
