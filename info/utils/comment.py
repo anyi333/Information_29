@@ -1,6 +1,7 @@
 #公共的工具文件
 from flask import session,current_app,g
 from info.models import User
+from functools import wraps
 
 
 def do_rank(index):
@@ -19,6 +20,9 @@ def user_login_data(view_func):
     # 使用装饰器的形式获取登录用户信息
 
     # 提示:wrapper函数会拦截到传给被装饰的函数的参数
+    # 提示:装饰器会修改被装饰的函数的__name__属性,将所有被装饰的函数的名字都叫做wrapper
+    # 解决:@wrapper(view_func):会还原被装饰的函数的__name__属性
+    @wraps(view_func)
     def wrapper(*args,**kwargs):
         '''具体获取登录用户信息的逻辑'''
         user_id = session.get('user_id', None)

@@ -5,6 +5,11 @@ from info.models import User,News
 from info import constants,db
 from info.utils.comment import user_login_data
 
+@news_blue.route('/news_collect')
+@user_login_data
+def news_collect():
+    '''新闻收藏'''
+    pass
 
 @news_blue.route('/detail/<int:news_id>')
 @user_login_data
