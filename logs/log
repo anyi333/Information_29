@@ -1314,3 +1314,9 @@ INFO _internal.py:88 127.0.0.1 - - [01/Jun/2018 19:37:05] "GET /news/detail/1 HT
 INFO _internal.py:88 127.0.0.1 - - [01/Jun/2018 19:37:06] "GET /news_list?cid=1&page=1 HTTP/1.1" 200 -
 INFO _internal.py:88 127.0.0.1 - - [01/Jun/2018 19:37:10] "GET /news/detail/28 HTTP/1.1" 200 -
 INFO _internal.py:88 127.0.0.1 - - [01/Jun/2018 19:37:11] "GET /news_list?cid=1&page=1 HTTP/1.1" 200 -
+INFO _internal.py:88  * Detected change in '/home/python/Desktop/Information_29/info/modules/news/views.py', reloading
+INFO _internal.py:88  * Restarting with stat
+WARNING _internal.py:88  * Debugger is active!
+INFO _internal.py:88  * Debugger PIN: 982-425-980
+INFO _internal.py:88 127.0.0.1 - - [01/Jun/2018 19:43:28] "GET /news/detail/1 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [01/Jun/2018 19:43:29] "GET /news_list?cid=1&page=1 HTTP/1.1" 200 -
