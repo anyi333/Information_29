@@ -57,6 +57,7 @@ def news_comment():
     except Exception as e:
         db.session.rollback()
         current_app.logger.error(e)
+        return jsonify(errno=response_code.RET.DBERR,errmsg='评论失败')
 
     # 6.响应评论结果
     return jsonify(errno=response_code.RET.OK,errmsg='OK',data=comment.to_dict())
@@ -128,6 +129,7 @@ def news_detail(news_id):
     3.查询新闻详情
     4.累加点击量
     5.收藏和取消收藏
+    6.展示用户评论
     '''
 
     # 1.查询登录用户信息
@@ -167,11 +169,25 @@ def news_detail(news_id):
         if news in user.collection_news:
             is_collected = True
 
+    # 6.展示用户评论
+    comments = []
+    try:
+        comments = Comment.query.filter(Comment.news_id==news_id).order_by(Comment.create_time.desc()).all()
+    except Exception as e:
+        current_app.logger.error(e)
+
+    # 渲染模板的数据,不使用原始数据,而把每个模型类都转化成字典to_dict()
+    comment_dict_list = []
+    for comment in comments:
+        comment_dict = comment.to_dict()
+        comment_dict_list.append(comment_dict)
+
     context = {
         'user':user,
         'news_clicks':news_clicks,
         'news':news.to_dict(),
-        'is_collected':is_collected
+        'is_collected':is_collected,
+        'comments':comment_dict_list
     }
 
     # 渲染模板
