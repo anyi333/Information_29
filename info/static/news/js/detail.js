@@ -11,6 +11,7 @@ $(function(){
         $('.login_form_con').show();
     })
 
+    // 思维导图有源码
     // 收藏
     $(".collection").click(function () {
         // 参数：要收藏哪条新闻
@@ -40,6 +41,7 @@ $(function(){
         });
     });
 
+    // 思维导图有源码
     // 取消收藏
     $(".collected").click(function () {
     // 参数：要取消收藏哪条新闻
