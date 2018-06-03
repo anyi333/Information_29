@@ -58,7 +58,7 @@ def comment_like():
         # 取消点赞
         if comment_like_model:
             # 将记录从数据库中删除
-            db.session.remove(comment_like_model)
+            db.session.delete(comment_like_model)
             # 减少点赞量
             comment.like_count -= 1
     # 7.同步数据到数据库
@@ -199,6 +199,7 @@ def news_detail(news_id):
     4.累加点击量
     5.收藏和取消收藏
     6.展示用户评论
+    7.展示评论点的赞
     '''
 
     # 1.查询登录用户信息
@@ -245,11 +246,34 @@ def news_detail(news_id):
     except Exception as e:
         current_app.logger.error(e)
 
+    # 7.展示评论点的赞
+    comment_like_ids  = []
+    if user:
+        try:
+            # 查询用户点赞了哪些评论
+            comment_likes = CommentLike.query.filter(CommentLike.user_id==user.id).all()
+            # 取出所有被用户点赞过的评论
+            comment_like_ids = [comment_like.comment_id for comment_like in comment_likes]
+        except Exception as e:
+            current_app.logger.error(e)
+
+
     # 渲染模板的数据,不使用原始数据,而把每个模型类都转化成字典to_dict()
     comment_dict_list = []
     for comment in comments:
         comment_dict = comment.to_dict()
         comment_dict_list.append(comment_dict)
+
+        # 给comment_dict追加一个is_like用于记录该评论是否被登录用户点赞了
+        comment_dict['is_like'] = False
+        if comment.id in comment_like_ids:
+            comment_dict['is_like'] = True
+
+
+        comment_dict_list.append(comment_dict)
+
+
+
 
     context = {
         'user':user,
