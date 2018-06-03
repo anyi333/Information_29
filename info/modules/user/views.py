@@ -2,11 +2,25 @@
 from flask import g
 from flask import redirect
 from flask import url_for
-
 from . import user_blue
 from flask import render_template
 from info.utils.comment import user_login_data
 
+
+@user_blue.route('/base_info')
+@user_login_data
+def base_info():
+    '''基本资料'''
+    # 1.获取登录用户信息
+    user = g.user
+    if not user:
+        return redirect(url_for('index.index'))
+
+    context = {
+        'user': user
+    }
+
+    return render_template('news/user_base_info.html',context=context)
 
 @user_blue.route('/info')
 @user_login_data

@@ -8,7 +8,7 @@ SMS_CODE_REDIS_EXPIRES = 300
 QINIU_DOMIN_PREFIX = "http://oyucyko3w.bkt.clouddn.com/"
 
 # 首页展示最多的新闻数量
-HOME_PAGE_MAX_NEWS = 6
+HOME_PAGE_MAX_NEWS = 10
 
 # 用户的关注每一页最多数量
 USER_FOLLOWED_MAX_COUNT = 4
@@ -20,7 +20,7 @@ USER_COLLECTION_MAX_NEWS = 10
 OTHER_NEWS_PAGE_MAX_COUNT = 10
 
 # 点击排行展示的最多新闻数据
-CLICK_RANK_MAX_NEWS = 10
+CLICK_RANK_MAX_NEWS = 6
 
 # 管理员页面用户每页多最数据条数
 ADMIN_USER_PAGE_MAX_COUNT = 10
