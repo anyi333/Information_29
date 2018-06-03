@@ -53,7 +53,6 @@ def comment_like():
             db.session.add(comment_like_model)
             # 累加点赞量
             comment.like_count += 1
-
     else:
         # 取消点赞
         if comment_like_model:
@@ -63,7 +62,6 @@ def comment_like():
             comment.like_count -= 1
     # 7.同步数据到数据库
     try:
-        db.session.add(comment_like_model)
         db.session.commit()
     except Exception as e:
         db.session.rollback()
@@ -262,18 +260,12 @@ def news_detail(news_id):
     comment_dict_list = []
     for comment in comments:
         comment_dict = comment.to_dict()
-        comment_dict_list.append(comment_dict)
 
         # 给comment_dict追加一个is_like用于记录该评论是否被登录用户点赞了
         comment_dict['is_like'] = False
         if comment.id in comment_like_ids:
             comment_dict['is_like'] = True
-
-
         comment_dict_list.append(comment_dict)
-
-
-
 
     context = {
         'user':user,
