@@ -1,9 +1,76 @@
 # 新闻详情:收藏,评论,点赞
 from . import news_blue
 from flask import render_template,session,current_app,abort,g,jsonify,request
-from info.models import User,News, Comment
+from info.models import User,News, Comment, CommentLike
 from info import constants,db,response_code
 from info.utils.comment import user_login_data
+
+
+@news_blue.route('/comment_like',methods=['POST'])
+@user_login_data
+def comment_like():
+    '''新闻点赞和取消点赞'''
+
+    # 1.获取登录用户信息
+    user = g.user
+    if not user:
+        return jsonify(errno=response_code.RET.SESSIONERR, errmsg='用户未登陆')
+
+    # 2.接受参数(comment_id,action)  ajax请求
+    comment_id = request.json.get('comment_id')
+    action = request.json.get('action')
+
+    # 3.校验参数
+    if not all([comment_id, action]):
+        return jsonify(errno=response_code.RET.PARAMERR, errmsg='缺少参数')
+    if action not in['add','remove']:
+        return jsonify(errno=response_code.RET.PARAMERR,errmsg='参数错误')
+
+    # 4.根据客户端传入的comment_id查询出要点赞的评论
+    try:
+        comment = Comment.query.get(comment_id)
+    except Exception as e:
+        current_app.logger.error(e)
+        return jsonify(errno=response_code.RET.DBERR, errmsg='查询评论失败')
+
+    # 5.查询要点赞的评论的赞是否存在:查询当前登录用户是否给当前评论点过赞
+    try:
+        comment_like_model = CommentLike.query.filter(CommentLike.comment_id==comment_id,CommentLike.user_id==user.id).first()
+    except Exception as e:
+        current_app.logger.error(e)
+        return jsonify(errno=response_code.RET.DBERR, errmsg='查询点赞失败')
+
+    # 6.点赞和取消点赞
+    if action == 'add':
+        # 点赞
+        if not comment_like_model:
+            comment_like_model = CommentLike()
+            comment_like_model.user_id = user.id
+            comment_like_model.comment_id = comment_id
+            # 将新记录添加到数据库
+            db.session.add(comment_like_model)
+            # 累加点赞量
+            comment.like_count += 1
+
+    else:
+        # 取消点赞
+        if comment_like_model:
+            # 将记录从数据库中删除
+            db.session.remove(comment_like_model)
+            # 减少点赞量
+            comment.like_count -= 1
+    # 7.同步数据到数据库
+    try:
+        db.session.add(comment_like_model)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        current_app.logger.error(e)
+        return jsonify(errno=response_code.RET.DBERR,errmsg='操作失败')
+
+    # 8.响应点赞和取消点赞的结果
+    return jsonify(errno=response_code.RET.OK,errmsg='OK')
+
 
 @news_blue.route('/news_comment',methods=['POST'])
 @user_login_data

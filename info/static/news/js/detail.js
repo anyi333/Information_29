@@ -151,6 +151,7 @@ $(function(){
             $(this).parent().toggle();
         }
 
+        //TODO:点赞
         if(sHandler.indexOf('comment_up')>=0)
         {
             var $this = $(this);
