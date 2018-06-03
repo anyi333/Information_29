@@ -1,13 +1,33 @@
 # 个人中心
 from flask import current_app
-from flask import g,redirect,url_for,render_template, jsonify
-from flask import request
-from flask import session
-
+from flask import g,redirect,url_for,render_template, jsonify,request,session
 from info import response_code, db
 from . import user_blue
 from info.utils.comment import user_login_data
 
+
+@user_blue.route('/pic_info')
+@user_login_data
+def pic_info():
+    '''设置头像'''
+
+    # 1.获取登录用户信息
+    user = g.user
+    if not user:
+        return redirect(url_for('index.index'),methods=['GET','POST'])
+
+    # 2.实现GET请求逻辑
+    if request.method == 'GET':
+        # 构造渲染数据的上下文
+        context = {
+            'user': user
+        }
+        # 渲染界面
+        return render_template('/news/user_pic_info.html', context=context)
+
+    # 3.POST请求逻辑:修改用户基本信息
+    if request.method == "POST":
+        pass
 
 @user_blue.route('/base_info',methods=['GET','POST'])
 @user_login_data
