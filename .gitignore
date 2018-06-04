@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 .idea/
 migrations
+.qiniu*
 # C extensions
 *.so
 

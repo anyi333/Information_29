@@ -1,12 +1,15 @@
 # 个人中心
 from flask import current_app
 from flask import g,redirect,url_for,render_template, jsonify,request,session
+
+from info import constants
 from info import response_code, db
+from info.utils.file_storage import upload_file
 from . import user_blue
 from info.utils.comment import user_login_data
 
 
-@user_blue.route('/pic_info')
+@user_blue.route('/pic_info',methods=['GET','POST'])
 @user_login_data
 def pic_info():
     '''设置头像'''
@@ -14,7 +17,7 @@ def pic_info():
     # 1.获取登录用户信息
     user = g.user
     if not user:
-        return redirect(url_for('index.index'),methods=['GET','POST'])
+        return redirect(url_for('index.index'))
 
     # 2.实现GET请求逻辑
     if request.method == 'GET':
@@ -23,11 +26,46 @@ def pic_info():
             'user': user
         }
         # 渲染界面
-        return render_template('/news/user_pic_info.html', context=context)
+        return render_template('news/user_pic_info.html', context=context)
 
     # 3.POST请求逻辑:修改用户基本信息
     if request.method == "POST":
-        pass
+        # 3.1获取参数(图片)
+        avatar_file = request.files.get('avatar')
+
+        # 3.2校验参数
+        try:
+            avatar_data = avatar_file.read()
+        except Exception as e:
+            current_app.logger.error(e)
+            return jsonify(errno=response_code.RET.PARAMERR,errmsg='读取头像失败')
+
+        # 3.3调用上传的方法,将图片上传到七牛
+        try:
+            key = upload_file(avatar_data)
+        except Exception as e:
+            current_app.logger.error(e)
+            return jsonify(errno=response_code.RET.THIRDERR, errmsg='上传失败')
+
+
+        # 3.4保存用户头像的key到数据库
+        user.avatar_url = key
+        try:
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            current_app.logger.error(e)
+            return jsonify(errno=response_code.RET.DBERR,errmsg='保存用户头像失败')
+
+        data = {
+            'avatar_url':constants.QINIU_DOMIN_PREFIX + key
+        }
+
+        # 3.5响应头像上传的结果
+        return jsonify(errno=response_code.RET.OK,errmsg='上传头像成功',data=data)
+
+
+
 
 @user_blue.route('/base_info',methods=['GET','POST'])
 @user_login_data
