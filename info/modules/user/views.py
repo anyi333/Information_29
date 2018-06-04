@@ -23,7 +23,7 @@ def pic_info():
     if request.method == 'GET':
         # 构造渲染数据的上下文
         context = {
-            'user': user
+            'user': user.to_dict()
         }
         # 渲染界面
         return render_template('news/user_pic_info.html', context=context)
@@ -80,10 +80,10 @@ def base_info():
     if request.method == 'GET':
         # 构造渲染数据的上下文
         context = {
-            'user': user
+            'user': user.to_dict()
         }
         # 渲染界面
-        return render_template('/news/user_base_info.html', context=context)
+        return render_template('news/user_base_info.html', context=context)
 
     # 3.POST请求逻辑:修改用户基本信息
     if request.method == "POST":
@@ -128,7 +128,7 @@ def user_info():
         return redirect(url_for('index.index'))
 
     context = {
-        'user':user
+        'user':user.to_dict()
     }
 
     return render_template('news/user.html',context=context)
