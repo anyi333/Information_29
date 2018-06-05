@@ -3,15 +3,15 @@ from flask import current_app
 from flask import g,redirect,url_for,render_template, jsonify,request,session
 from info import constants
 from info import response_code, db
-from info.models import Category
+from info.models import Category, News
 from info.utils.file_storage import upload_file
 from . import user_blue
 from info.utils.comment import user_login_data
 
 
-@user_blue.route('/new_release',methods=['GET','POST'])
+@user_blue.route('/news_release',methods=['GET','POST'])
 @user_login_data
-def new_release():
+def news_release():
     '''新闻发布'''
     # 1.获取登录用户信息
     user = g.user
@@ -27,8 +27,8 @@ def new_release():
         except Exception as e:
             current_app.logger.error(e)
 
-            # 删除最新分类
-            categories.pop(0)
+        # 删除最新分类
+        categories.pop(0)
 
         context = {
             'categories':categories
@@ -38,7 +38,54 @@ def new_release():
 
     # 3.POST请求逻辑:实现发布新闻的逻辑
     if request.method == 'POST':
-        pass
+        # 3.1接收参数
+        title = request.form.get("title")
+        source = "个人发布"
+        digest = request.form.get("digest")
+        content = request.form.get("content")
+        index_image = request.files.get("index_image")
+        category_id = request.form.get("category_id")
+
+        # 3.2检验参数
+        if not all([title,source,digest,content,index_image,category_id]):
+            return jsonify(errno=response_code.RET.PARAMERR,errmsg='缺少参数')
+
+        # 3.3读取用户上传的新闻图片
+        try:
+            index_image_data = index_image.read()
+        except Exception as e:
+            current_app.logger.error(e)
+            return jsonify(errno=response_code.RET.PARAMERR, errmsg='读取新闻图片失败')
+
+        # 3.4将用户上传的新闻图片转存到七牛
+        try:
+            key = upload_file(index_image_data)
+        except Exception as e:
+            current_app.logger.error(e)
+            return jsonify(errno=response_code.RET.THIRDERR, errmsg='上传新闻图片失败')
+
+        # 3.5创建News新闻模型对象,并赋值和同步数据库
+        news = News()
+        news.title = title
+        news.digest = digest
+        news.source = source
+        news.content = content
+        news.index_image_url = constants.QINIU_DOMIN_PREFIX + key
+        news.category_id = category_id
+        news.user_id = g.user.id
+        # 1代表待审核状态
+        news.status = 1
+
+        try:
+            db.session.add(news)
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            current_app.logger.error(e)
+            return jsonify(errno=response_code.RET.DBERR,errmsg='保存新闻数据失败')
+
+        # 3.6想应该新闻发布的结果
+        return jsonify(errno=response_code.RET.OK,errmsg='发布新闻成功')
 
 
 @user_blue.route('/user_collect',methods=['GET','POST'])
