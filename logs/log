@@ -4266,3 +4266,5 @@ INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 20:51:00] "GET /news_list?cid=1&
 INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 20:51:25] "GET / HTTP/1.1" 200 -
 INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 20:51:25] "GET /news_list?cid=1&page=1 HTTP/1.1" 200 -
 INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 20:51:26] "GET /news_list?cid=1&page=1 HTTP/1.1" 200 -
+INFO _internal.py:88  * Detected change in '/home/python/Desktop/Information_29/manage.py', reloading
+INFO _internal.py:88  * Restarting with stat
