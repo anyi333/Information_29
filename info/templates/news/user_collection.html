@@ -15,7 +15,7 @@
         <ul class="article_list">
 
             {% for news in context.news_list %}
-            <li><a href="#">{{ news.title }}</a><span>{{ news.create_time }}</span></li>
+            <li><a href="{{ url_for('news.news_detail',news_id=news.id) }}">{{ news.title }}</a><span>{{ news.create_time }}</span></li>
             {% endfor %}
 
         </ul>

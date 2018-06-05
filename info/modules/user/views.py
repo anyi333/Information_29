@@ -9,6 +9,55 @@ from . import user_blue
 from info.utils.comment import user_login_data
 
 
+@user_blue.route('/news_list')
+@user_login_data
+def user_news_list():
+    '''我发布的新闻列表'''
+    # 1.获取登录用户信息
+    user = g.user
+    if not user:
+        return redirect(url_for('index.index'))
+
+    # 2.接收参数
+    page = request.args.get('p','1')
+
+    # 3.检验参数
+    try:
+        page = int(page)
+    except Exception as e:
+        current_app.logger.error(e)
+        page = '1'
+
+    # 4.分页查询
+    new_list = []
+    current_page = 1
+    total_page = 1
+
+    try:
+        paginate = News.query.filter(News.user_id==user.id).paginate(page,constants.USER_COLLECTION_MAX_NEWS,False)
+
+        # 5.构造渲染数据   写在try里面就可以不用写paginate = None
+        new_list = paginate.items
+        total_page = paginate.pages
+        current_page = paginate.page
+    except Exception as e:
+        current_app.logger.error(e)
+
+    # 格式化数据
+    news_dict_list = []
+    for news in new_list:
+        news_dict_list.append(news.to_basic_dict())
+
+    context = {
+        'news_list':news_dict_list,
+        'total_page':total_page,
+        'current_page':current_page
+    }
+
+    # 6.渲染界面
+    return render_template('news/user_news_list.html',context=context)
+
+
 @user_blue.route('/news_release',methods=['GET','POST'])
 @user_login_data
 def news_release():
