@@ -19,19 +19,18 @@
             {% endfor %}
 
         </ul>
-     <div id="pagination" class="page"></div>
-        <script>
-            $(function() {
-                $("#pagination").pagination({
-                    currentPage: {{ context.current_page }},
-                    totalPage: {{ context.total_page }},
-                    callback: function(current) {
-                        window.location.href = '/user/user_collection?p='+ current;
-                    }
+        <div id="pagination" class="page"></div>
+            <script>
+                $(function() {
+                    $("#pagination").pagination({
+                        currentPage: {{ context.current_page }},
+                        totalPage: {{ context.total_page }},
+                        callback: function(current) {
+                            window.location.href = '/user/user_collection?p='+ current;
+                        }
+                    });
                 });
-            });
-        </script>
-
-    </div>
+            </script>
+        </div>
 </body>
 </html>

@@ -1,12 +1,44 @@
 # 个人中心
 from flask import current_app
 from flask import g,redirect,url_for,render_template, jsonify,request,session
-
 from info import constants
 from info import response_code, db
+from info.models import Category
 from info.utils.file_storage import upload_file
 from . import user_blue
 from info.utils.comment import user_login_data
+
+
+@user_blue.route('/new_release',methods=['GET','POST'])
+@user_login_data
+def new_release():
+    '''新闻发布'''
+    # 1.获取登录用户信息
+    user = g.user
+    if not user:
+        return redirect(url_for('index.index'))
+
+    # 2.GET请求逻辑:渲染发布新闻的界面
+    if request.method == 'GET':
+        # 2.1渲染新闻的分类页面
+        categories = []
+        try:
+            categories = Category.query.all()
+        except Exception as e:
+            current_app.logger.error(e)
+
+            # 删除最新分类
+            categories.pop(0)
+
+        context = {
+            'categories':categories
+        }
+
+        return render_template('news/user_news_release.html',context=context)
+
+    # 3.POST请求逻辑:实现发布新闻的逻辑
+    if request.method == 'POST':
+        pass
 
 
 @user_blue.route('/user_collect',methods=['GET','POST'])
