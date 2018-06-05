@@ -3460,3 +3460,118 @@ INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:06:51] "GET /static/news/imag
 INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:06:51] "GET /static/news/images/pic_code.png HTTP/1.1" 304 -
 INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:06:51] "GET /news_list?cid=1&page=1 HTTP/1.1" 200 -
 INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:06:51] "GET /news_list?cid=1&page=1 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:09:04] "GET /user/info HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:09:05] "GET /user/base_info HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:09:05] "GET /news_list?cid=1&page=1 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:09:07] "GET /news_list?cid=1&page=2 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:09:08] "GET /static/news/html/user_collection.html HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:09:08] "GET /static/news/html/user_collection.html HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:09:08] "GET /static/news/css/jquery.pagination.css HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:09:08] "GET /static/news/js/jquery.pagination.min.js HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:09:09] "GET /news_list?cid=1&page=3 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:09:09] "GET /news_list?cid=1&page=4 HTTP/1.1" 200 -
+INFO _internal.py:88  * Detected change in '/home/python/Desktop/Information_29/info/modules/user/views.py', reloading
+INFO _internal.py:88  * Restarting with stat
+WARNING _internal.py:88  * Debugger is active!
+INFO _internal.py:88  * Debugger PIN: 982-425-980
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:54:33] "GET /user/info HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:54:33] "GET /static/news/css/reset.css HTTP/1.1" 304 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:54:33] "GET /static/news/css/main.css HTTP/1.1" 304 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:54:33] "GET /static/news/js/jquery-1.12.4.min.js HTTP/1.1" 304 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:54:34] "GET /static/news/js/main.js HTTP/1.1" 304 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:54:34] "GET /static/news/js/index.js HTTP/1.1" 304 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:54:34] "GET /static/news/js/jquery.form.min.js HTTP/1.1" 304 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:54:34] "GET /static/news/images/logo.png HTTP/1.1" 304 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:54:34] "GET /static/news/images/pic_code.png HTTP/1.1" 304 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:54:34] "GET /user/base_info HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:54:34] "GET /news_list?cid=1&page=1 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:54:34] "GET /static/news/css/reset.css HTTP/1.1" 304 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:54:34] "GET /static/news/css/main.css HTTP/1.1" 304 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:54:34] "GET /static/news/js/jquery-1.12.4.min.js HTTP/1.1" 304 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:54:34] "GET /static/news/js/user_base_info.js HTTP/1.1" 304 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:54:35] "GET /favicon.ico HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:54:36] "GET /news_list?cid=1&page=2 HTTP/1.1" 200 -
+ERROR views.py:40 'Pagination' object has no attribute 'all'
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:54:38] "GET /user/user_collect HTTP/1.1" 500 -
+ERROR views.py:40 'Pagination' object has no attribute 'all'
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:54:38] "GET /user/user_collect HTTP/1.1" 500 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:54:38] "GET /user/user_collect?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:54:38] "GET /user/user_collect?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:54:38] "GET /user/user_collect?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:54:39] "GET /user/user_collect?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 11:54:40] "GET /news_list?cid=1&page=3 HTTP/1.1" 200 -
+INFO _internal.py:88  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+INFO _internal.py:88  * Restarting with stat
+WARNING _internal.py:88  * Debugger is active!
+INFO _internal.py:88  * Debugger PIN: 982-425-980
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:00:34] "GET /user/info HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:00:34] "GET /user/base_info HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:00:34] "GET /news_list?cid=1&page=1 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:00:40] "GET /news_list?cid=1&page=2 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:00:42] "GET /static/news/html/user_news_list.html HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:00:42] "GET /static/news/html/user_news_list.html HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:00:42] "GET /static/news/images/tip_bg.png HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:00:45] "GET /news_list?cid=1&page=3 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:01:19] "GET /user/user_collect HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:01:19] "GET /user/user_collect HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:01:30] "GET / HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:01:31] "GET /news_list?cid=1&page=1 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:01:31] "GET /news_list?cid=1&page=1 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:01:34] "GET /news/detail/21 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:01:34] "GET /static/news/js/detail.js HTTP/1.1" 304 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:01:34] "GET /static/news/images/comment_icon.png HTTP/1.1" 304 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:01:34] "GET /static/news/images/collect_icons.png HTTP/1.1" 304 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:01:34] "GET /static/news/images/focus_icons.png HTTP/1.1" 304 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:01:35] "GET /news_list?cid=1&page=1 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:01:44] "GET /news_list?cid=1&page=2 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:01:44] "GET /news_list?cid=1&page=3 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:01:45] "POST /news/news_collect HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:01:50] "GET /news/detail/1154 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:01:51] "GET /news_list?cid=1&page=1 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:01:54] "GET /news_list?cid=1&page=2 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:01:55] "POST /news/news_collect HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:02:00] "GET /news/detail/8 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:02:00] "GET /news_list?cid=1&page=1 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:02:04] "GET /news_list?cid=1&page=2 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:02:04] "GET /news_list?cid=1&page=3 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:02:04] "GET /news_list?cid=1&page=4 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:02:05] "POST /news/news_collect HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:02:09] "GET /news_list?cid=1&page=2 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:02:11] "GET /news/detail/3 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:02:11] "GET /news_list?cid=1&page=1 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:02:14] "GET /news_list?cid=1&page=2 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:02:14] "GET /news_list?cid=1&page=3 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:02:14] "GET /news_list?cid=1&page=4 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:02:14] "GET /news_list?cid=1&page=5 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:02:15] "GET /news_list?cid=1&page=6 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:02:15] "POST /news/news_collect HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:02:19] "GET /news_list?cid=1&page=2 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:02:21] "GET /news/detail/4 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:02:22] "GET /news_list?cid=1&page=1 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:02:28] "GET /news_list?cid=1&page=2 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:02:44] "GET /news_list?cid=1&page=3 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:02:44] "GET /news_list?cid=1&page=4 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:02:45] "POST /news/news_collect HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:02:49] "GET /news_list?cid=1&page=5 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:02:59] "GET /user/info HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:03:02] "GET /user/base_info HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:03:02] "GET /news_list?cid=1&page=1 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:03:08] "GET /user/user_collect HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:03:08] "GET /user/user_collect HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:03:13] "GET /news/news_collect?p=2 HTTP/1.1" 405 -
+INFO _internal.py:88  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+INFO _internal.py:88  * Restarting with stat
+WARNING _internal.py:88  * Debugger is active!
+INFO _internal.py:88  * Debugger PIN: 982-425-980
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:11:25] "GET /user/info HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:11:28] "GET /user/base_info HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:11:28] "GET /news_list?cid=1&page=1 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:11:35] "GET /user/user_collect HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:11:35] "GET /user/user_collect HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:11:38] "GET /user/user_collect?p=2 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:11:40] "GET /user/user_collect?p=3 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [05/Jun/2018 12:11:42] "GET /user/user_collect?p=4 HTTP/1.1" 200 -
+INFO _internal.py:88  * Detected change in '/home/python/Desktop/Information_29/info/modules/user/views.py', reloading
+INFO _internal.py:88  * Restarting with stat
+WARNING _internal.py:88  * Debugger is active!
+INFO _internal.py:88  * Debugger PIN: 982-425-980

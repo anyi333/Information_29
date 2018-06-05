@@ -9,6 +9,55 @@ from . import user_blue
 from info.utils.comment import user_login_data
 
 
+@user_blue.route('/user_collect',methods=['GET','POST'])
+@user_login_data
+def user_collection():
+    '''用户收藏'''
+
+    # 1.获取登录用户信息
+    user = g.user
+    if not user:
+        return redirect(url_for('index.index'))
+
+    # 2.接受参数
+    # 使用args可以获取url中?后面的参数
+    page = request.args.get('p','1')
+
+    # 3.校验参数
+    try:
+        page = int(page)
+    except Exception as e:
+        current_app.logger.error(e)
+        page = '1'
+
+    # 4.分页查询user.collection_news == BaseQuery类型的对象,后面可以继续做查询
+    #比如filter()获得的数据
+    # USER_COLLECTION_MAX_NEWS将收藏条数改为了2
+    paginate = None
+    try:
+        paginate = user.collection_news.paginate(page,constants.USER_COLLECTION_MAX_NEWS,False)
+    except Exception as e:
+        current_app.logger.error(e)
+
+    # 5.构造渲染模板的数据
+    news_list = paginate.items  #获取分页数据
+    total_page = paginate.pages  #获取总页数
+    current_page = paginate.page  #获取当前页
+
+    new_dict_list = []
+    for news in news_list:
+        new_dict_list.append(news.to_basic_dict())
+
+    context = {
+        'news_list':new_dict_list,
+        'total_page':total_page,
+        'current_page':current_page
+
+    }
+
+    # 6.渲染模板
+    return render_template('news/user_collection.html',context=context)
+
 @user_blue.route('/pass_info',methods=['GET','POST'])
 @user_login_data
 def pass_info():
