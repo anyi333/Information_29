@@ -12,6 +12,26 @@ from info.utils.comment import user_login_data
 from . import admin_blue
 
 
+@admin_blue.route('/user_count')
+def user_count():
+    '''用户量统计 '''
+    # 用户总数
+    total_count = 0
+    # 月新增数
+    month_count = 0
+    # 日新增数
+    day_count = 0
+
+    context = {
+        'total_count':total_count,
+        'month_count':month_count,
+        'day_count':day_count
+    }
+
+
+    return render_template('admin/user_count.html',context=context)
+
+
 @admin_blue.route('/')
 @user_login_data
 def admin_index():
