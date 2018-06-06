@@ -21,6 +21,12 @@ def admin_login():
 
     # GET:提供登录界面
     if request.method == 'GET':
+        # 获取登录用户信息.如果用户已经登录的,直接进入到主页
+        user_id = session.get('user_id',None)
+        is_admin = session.get('is_admin',False)
+        if user_id and is_admin:
+            return redirect(url_for('admin.admin_index'))
+
         return render_template('admin/login.html')
 
     # POST:实现登录的后端业务逻辑
