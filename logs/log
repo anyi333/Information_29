@@ -4894,3 +4894,91 @@ INFO _internal.py:88  * Restarting with stat
 WARNING _internal.py:88  * Debugger is active!
 INFO _internal.py:88  * Debugger PIN: 982-425-980
 INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:24:29] "GET /admin/news_review HTTP/1.1" 200 -
+INFO _internal.py:88  * Detected change in '/home/python/Desktop/Information_29/info/modules/admin/views.py', reloading
+INFO _internal.py:88  * Restarting with stat
+INFO _internal.py:88  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+INFO _internal.py:88  * Restarting with stat
+WARNING _internal.py:88  * Debugger is active!
+INFO _internal.py:88  * Debugger PIN: 982-425-980
+INFO _internal.py:88  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+INFO _internal.py:88  * Restarting with stat
+WARNING _internal.py:88  * Debugger is active!
+INFO _internal.py:88  * Debugger PIN: 982-425-980
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:35:54] "GET /admin/news_review HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:35:54] "GET /static/admin/css/reset.css HTTP/1.1" 304 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:35:54] "GET /static/admin/css/main.css HTTP/1.1" 304 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:35:54] "GET /static/admin/css/jquery.pagination.css HTTP/1.1" 304 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:35:54] "GET /static/admin/js/jquery-1.12.4.min.js HTTP/1.1" 304 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:35:54] "GET /static/admin/js/jquery.pagination.min.js HTTP/1.1" 304 -
+ERROR views.py:51 'set' object is not callable
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:36:18] "GET /admin/news_review?keyword=%E4%B8%80 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:36:18] "GET /static/news/images/not_found.png HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:36:19] "GET /news_list?cid=1&page=1 HTTP/1.1" 200 -
+INFO _internal.py:88  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+INFO _internal.py:88  * Restarting with stat
+WARNING _internal.py:88  * Debugger is active!
+INFO _internal.py:88  * Debugger PIN: 982-425-980
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:36:50] "GET /admin HTTP/1.1" 301 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:36:50] "GET /admin/ HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:36:52] "GET /admin/user_count HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:37:05] "GET /admin/news_review HTTP/1.1" 200 -
+ERROR views.py:51 'set' object is not callable
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:37:13] "GET /admin/news_review?keyword=%E4%B8%80 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:37:13] "GET /news_list?cid=1&page=1 HTTP/1.1" 200 -
+ERROR views.py:51 'set' object is not callable
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:44:42] "GET /admin/news_review?keyword=%E4%B8%80 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:44:43] "GET /news_list?cid=1&page=1 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:44:55] "GET /admin/login HTTP/1.1" 302 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:44:55] "GET /admin/ HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:44:55] "GET /admin/user_count HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:45:00] "GET /admin/news_review HTTP/1.1" 500 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:45:00] "GET /admin/news_review?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:45:00] "GET /admin/news_review?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:45:00] "GET /admin/news_review?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:45:01] "GET /admin/news_review?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:45:43] "GET /admin/login HTTP/1.1" 302 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:45:43] "GET /admin/ HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:45:44] "GET /admin/user_count HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:45:46] "GET /admin/news_review HTTP/1.1" 200 -
+ERROR views.py:51 'set' object is not callable
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:45:55] "GET /admin/news_review?keyword=%E4%B8%80 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:45:55] "GET /news_list?cid=1&page=1 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:45:58] "GET /news_list?cid=1&page=2 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:45:59] "GET /news_list?cid=1&page=3 HTTP/1.1" 200 -
+ERROR views.py:51 'set' object is not callable
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:46:11] "GET /admin/news_review?keyword=%E4%B8%80 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:46:12] "GET /news_list?cid=1&page=1 HTTP/1.1" 200 -
+INFO _internal.py:88  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+INFO _internal.py:88  * Restarting with stat
+WARNING _internal.py:88  * Debugger is active!
+INFO _internal.py:88  * Debugger PIN: 982-425-980
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:47:31] "GET /admin/login HTTP/1.1" 302 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:47:32] "GET /admin/ HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:47:33] "GET /admin/user_count HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:47:43] "GET /admin/news_review HTTP/1.1" 200 -
+ERROR views.py:51 'set' object is not callable
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:48:08] "GET /admin/news_review?keyword=%E4%BA%8C HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:48:08] "GET /news_list?cid=1&page=1 HTTP/1.1" 200 -
+INFO _internal.py:88  * Detected change in '/home/python/Desktop/Information_29/info/modules/admin/views.py', reloading
+INFO _internal.py:88  * Restarting with stat
+WARNING _internal.py:88  * Debugger is active!
+INFO _internal.py:88  * Debugger PIN: 982-425-980
+ERROR views.py:51 'set' object is not callable
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:50:58] "GET /admin/news_review?keyword=%E4%BA%8C HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:50:58] "GET /admin/login HTTP/1.1" 302 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:50:59] "GET /news_list?cid=1&page=1 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:50:59] "GET /admin/ HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:51:02] "GET /admin/user_count HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:51:09] "GET /admin/news_review HTTP/1.1" 200 -
+ERROR views.py:51 'set' object is not callable
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:51:19] "GET /admin/news_review?keyword=%E4%B8%89 HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:51:20] "GET /news_list?cid=1&page=1 HTTP/1.1" 200 -
+INFO _internal.py:88  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+INFO _internal.py:88  * Restarting with stat
+WARNING _internal.py:88  * Debugger is active!
+INFO _internal.py:88  * Debugger PIN: 982-425-980
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:52:01] "GET /admin/login HTTP/1.1" 302 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:52:01] "GET /admin/ HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:52:03] "GET /admin/user_count HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:52:09] "GET /admin/news_review HTTP/1.1" 200 -
+INFO _internal.py:88 127.0.0.1 - - [07/Jun/2018 10:52:17] "GET /admin/news_review?keyword=%E4%B8%89 HTTP/1.1" 200 -

@@ -24,6 +24,7 @@ def news_review():
     '''后台新闻审核列表'''
     # 1.接受参数
     page = request.args.get('p', '1')
+    keyword = request.args.get('keyword')
 
     # 2.校验参数
     try:
@@ -37,7 +38,12 @@ def news_review():
     total_page = 1
 
     try:
-        paginate = News.query.filter(News.status!=0).order_by(News.create_time.desc()).paginate(page,constants.ADMIN_NEWS_PAGE_MAX_COUNT,False)
+        if keyword:
+            paginate = News.query.filter(News.title.contains(keyword),News.status!=0).order_by(News.create_time.desc()).paginate(page,constants.ADMIN_NEWS_PAGE_MAX_COUNT,False)
+        else:
+            paginate = News.query.filter(News.status != 0).order_by(News.create_time.desc()).paginate(page,
+                                                                                                      constants.ADMIN_NEWS_PAGE_MAX_COUNT,
+                                                                                                      False)
         news_list = paginate.items
         current_page = paginate.page
         total_page = paginate.pages
