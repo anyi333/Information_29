@@ -1,7 +1,6 @@
 # 后台管理
 import datetime
 import time
-
 from flask import abort
 from flask import current_app
 from flask import g
@@ -10,12 +9,54 @@ from flask import render_template
 from flask import request
 from flask import session
 from flask import url_for
-
 from info import constants
-from info.models import User
+from info.models import User, News
 from info.modules import user
 from info.utils.comment import user_login_data
 from . import admin_blue
+
+
+
+
+
+@admin_blue.route('/news_review')
+def news_review():
+    '''后台新闻审核列表'''
+    # 1.接受参数
+    page = request.args.get('p', '1')
+
+    # 2.校验参数
+    try:
+        page = int(page)
+    except Exception as e:
+        current_app.logger.error(e)
+        page = '1'
+    # 3.分页查询用户列表,管理员除外
+    news_list = []
+    current_page = 1
+    total_page = 1
+
+    try:
+        paginate = News.query.filter(News.status!=0).order_by(News.create_time.desc()).paginate(page,constants.ADMIN_NEWS_PAGE_MAX_COUNT,False)
+        news_list = paginate.items
+        current_page = paginate.page
+        total_page = paginate.pages
+    except Exception as e:
+        current_app.logger.error(e)
+        abort(404)
+
+    # 4.构造渲染数据
+    news_dict_list = []
+    for news in news_list:
+        news_dict_list.append(news.to_review_dict())
+
+    context = {
+        'news_list': news_dict_list,
+        'current_page': current_page,
+        'total_page': total_page
+    }
+    # 5.响应结果
+    return render_template('admin/news_review.html',context=context)
 
 
 @admin_blue.route('/user_list')
@@ -55,8 +96,6 @@ def user_list():
         'current_page':current_page,
         'total_page':total_page
     }
-
-
 
     return render_template('admin/user_list.html',context=context)
 

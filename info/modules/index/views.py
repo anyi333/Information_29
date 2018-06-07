@@ -5,7 +5,6 @@ from info.models import User, News,Category
 from info import constants,response_code
 
 
-
 @index_blue.route('/news_list')
 def index_news_list():
     """提供主页新闻列表数据
