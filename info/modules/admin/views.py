@@ -1,6 +1,8 @@
 # 后台管理
 import datetime
 import time
+
+from flask import abort
 from flask import current_app
 from flask import g
 from flask import redirect
@@ -8,10 +10,56 @@ from flask import render_template
 from flask import request
 from flask import session
 from flask import url_for
+
+from info import constants
 from info.models import User
 from info.modules import user
 from info.utils.comment import user_login_data
 from . import admin_blue
+
+
+@admin_blue.route('/user_list')
+def user_list():
+    '''用户列表'''
+
+    # 1.接受参数
+    page = request.args.get('p','1')
+
+    # 2.校验参数
+    try:
+        page = int(page)
+    except Exception as e:
+        current_app.logger.error(e)
+        page = '1'
+
+    # 3.分页查询用户列表,管理员除外
+    users = []
+    current_page = 1
+    total_page = 1
+
+    try:
+        paginate = User.query.filter(User.is_admin==False).paginate(page,constants.ADMIN_NEWS_PAGE_MAX_COUNT,False)
+        users = paginate.items
+        current_page = paginate.page
+        total_page = paginate.pages
+    except Exception as e:
+        current_app.logger.error(e)
+        abort(404)
+    user_dict_list = []
+    for user in users:
+        user_dict_list.append(user.to_admin_dict())
+
+    # 4.构造渲染数据
+    context = {
+        'users':user_dict_list,
+        'current_page':current_page,
+        'total_page':total_page
+    }
+
+
+
+    return render_template('admin/user_list.html',context=context)
+
 
 
 @admin_blue.route('/user_count')
