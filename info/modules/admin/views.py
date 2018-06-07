@@ -1,7 +1,7 @@
 # 后台管理
 import datetime
 import time
-from flask import abort
+from flask import abort, jsonify
 from flask import current_app
 from flask import g
 from flask import redirect
@@ -9,12 +9,62 @@ from flask import render_template
 from flask import request
 from flask import session
 from flask import url_for
-from info import constants
+from info import constants, db
+from info import response_code
 from info.models import User, News
 from info.modules import user
 from info.utils.comment import user_login_data
 from . import admin_blue
 
+
+
+@admin_blue.route('/news_review_action',methods=['POST'])
+def news_review_action():
+    '''审核新闻实现'''
+
+    # 1.接受参数
+    news_id = request.json.get('news_id')
+    action = request.json.get('action')
+
+    # 2.校验参数
+    if not all([news_id, action]):
+        return jsonify(errno=response_code.RET.PARAMERR,errmsg='缺少参数')
+    if action not in['accept','reject']:
+        return jsonify(errno=response_code.RET.PARAMERR,errmsg='参数错误')
+
+    # 3.查询待审核的新闻是否存在
+    try:
+        news = News.query.get(news_id)
+    except Exception as e:
+        current_app.logger.error(e)
+        return jsonify(errno=response_code.RET.DBERR,errmsg='查询新闻数据失败')
+
+    if not news:
+        return jsonify(errno=response_code.RET.NODATA,errmsg='新闻不存在')
+
+    # 4.实现审核逻辑
+    if action == 'accept':
+        #通过
+        news.status = 0
+    else:
+        # 拒绝通过
+        news.status = -1
+        # 补充拒绝原因
+        reason = request.json.get('reason')
+        if not reason:
+            return jsonify(errno=response_code.RET.NODATA, errmsg='缺少拒绝理由')
+        news.reason = reason
+
+    # 5.同步数据库
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        current_app.logger.error(e)
+        return jsonify(errno=response_code.RET.DBERR,errmsg='保存数据失败')
+
+    # 6.响应结果
+    return jsonify(errno=response_code.RET.OK,errmsg='OK')
 
 @admin_blue.route('/news_review_detail/<int:news_id>')
 def news_review_detail(news_id):
