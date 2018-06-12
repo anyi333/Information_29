@@ -6,6 +6,52 @@ from info import constants,db,response_code
 from info.utils.comment import user_login_data
 
 
+@news_blue.route('/followed_user',methods=['POST'])
+@user_login_data
+def followed_user():
+    '''关注和取消关注'''
+    if not g.user:
+        return jsonify(errno=response_code.RET.SESSIONERR, errmsg="用户未登录")
+
+    user_id = request.json.get("user_id")
+    action = request.json.get("action")
+
+    if not all([user_id, action]):
+        return jsonify(errno=response_code.RET.PARAMERR, errmsg="参数错误")
+
+    if action not in ("follow", "unfollow"):
+        return jsonify(errno=response_code.RET.PARAMERR, errmsg="参数错误")
+
+    # 查询到关注的用户信息
+    try:
+        target_user = User.query.get(user_id)
+    except Exception as e:
+        current_app.logger.error(e)
+        return jsonify(errno=response_code.RET.DBERR, errmsg="查询数据库失败")
+
+    if not target_user:
+        return jsonify(errno=response_code.RET.NODATA, errmsg="未查询到用户数据")
+
+    # 根据不同操作做不同逻辑
+    if action == "follow":
+        # 关注
+        if target_user.followers.filter(User.id == g.user.id).count() > 0:
+            return jsonify(errno=response_code.RET.DATAEXIST, errmsg="当前已关注")
+        target_user.followers.append(g.user)
+    else:
+        # 取消关注
+        if target_user.followers.filter(User.id == g.user.id).count() > 0:
+            target_user.followers.remove(g.user)
+
+    # 保存到数据库
+    try:
+        db.session.commit()
+    except Exception as e:
+        current_app.logger.error(e)
+        return jsonify(errno=response_code.RET.DBERR, errmsg="数据保存错误")
+
+    return jsonify(errno=response_code.RET.OK, errmsg="操作成功")
+
 @news_blue.route('/comment_like',methods=['POST'])
 @user_login_data
 def comment_like():
@@ -198,6 +244,7 @@ def news_detail(news_id):
     5.收藏和取消收藏
     6.展示用户评论
     7.展示评论点的赞
+    8.关注和取消关注
     '''
 
     # 1.查询登录用户信息
@@ -267,12 +314,20 @@ def news_detail(news_id):
             comment_dict['is_like'] = True
         comment_dict_list.append(comment_dict)
 
+    # 8.关注和取消关注
+    is_followed = False
+    # 判断条件:当用户已登录,并且正在看的新闻有作者
+    if user and news.user:
+        if news.user in user.followed:
+            is_followed = True
+
     context = {
         'user':user.to_dict() if user else None,
         'news_clicks':news_clicks,
         'news':news.to_dict(),
         'is_collected':is_collected,
-        'comments':comment_dict_list
+        'comments':comment_dict_list,
+        'is_followed':is_followed
     }
 
     # 渲染模板

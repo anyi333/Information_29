@@ -11,12 +11,200 @@ from flask import session
 from flask import url_for
 from info import constants, db
 from info import response_code
-from info.models import User, News
+from info.models import User, News, Category
 from info.modules import user
 from info.utils.comment import user_login_data
+from info.utils.file_storage import upload_file
 from . import admin_blue
 
 
+@admin_blue.route('/news_type',methods = ['GET','POST'])
+def news_type():
+    '''新闻分类管理'''
+
+    # 渲染新闻分类界面
+    if request.method == "GET":
+        categories = []
+        try:
+            # 获取所有的分类数据
+            categories = Category.query.all()
+            categories.pop(0)
+        except Exception as e:
+            current_app.logger.error(e)
+            abort(404)
+
+        context = {
+            'categories':categories
+        }
+
+        # 返回内容
+        return render_template('admin/news_type.html', context=context)
+
+    # 修改和增加新闻分类
+    if request.method == 'POST':
+        # 接受参数
+        category_id = request.json.get("id")
+        category_name = request.json.get("name")
+        # 校验参数
+        if not category_name:
+            return jsonify(errno=response_code.RET.PARAMERR, errmsg="参数错误")
+        # 判断是否有分类id
+        if category_id:
+            try:
+                category = Category.query.get(category_id)
+            except Exception as e:
+                current_app.logger.error(e)
+                return jsonify(errno=response_code.RET.DBERR, errmsg="查询数据失败")
+
+            if not category:
+                return jsonify(errno=response_code.RET.NODATA, errmsg="未查询到分类信息")
+            # 修改分类名字
+            category.name = category_name
+        else:
+            # 如果没有分类id，则是添加分类
+            category = Category()
+            category.name = category_name
+            db.session.add(category)
+
+        try:
+            db.session.commit()
+        except Exception as e:
+            current_app.logger.error(e)
+            db.session.rollback()
+            return jsonify(errno=response_code.RET.DBERR, errmsg="保存数据失败")
+        return jsonify(errno=response_code.RET.OK, errmsg="保存数据成功")
+
+
+
+@admin_blue.route('/news_edit_detail/<int:news_id>',methods=['GET','POST'])
+def news_edit_detail(news_id):
+    '''新闻编辑详情'''
+
+    if request.method == 'GET':
+    # 直接查询要编辑的新闻
+        news = None
+        try:
+            news = News.query.get(news_id)
+        except Exception as e:
+            current_app.logger.error(e)
+            abort(404)
+
+        if not news:
+            abort(404)
+
+        # 查询分类的数据
+        categories = []
+        try:
+            categories = Category.query.all()
+            categories.pop(0)
+        except Exception as e:
+            current_app.logger.error(e)
+            abort(404)
+
+        context = {
+            "news": news.to_dict(),
+            "categories": categories
+        }
+        return render_template('admin/news_edit_detail.html', context=context)
+
+    # 2.新闻版式详情编辑
+    if request.method == 'POST':
+        # 2.1 接受参数
+        # news_id = request.form.get("news_id")
+        title = request.form.get("title")
+        digest = request.form.get("digest")
+        content = request.form.get("content")
+        index_image = request.files.get("index_image")
+        category_id = request.form.get("category_id")
+
+        # 2.2 校验参数
+        if not all([news_id, title, digest, content, category_id]):
+            return jsonify(errno=response_code.RET.PARAMERR, errmsg='缺少参数')
+
+        # 2.3 查询要编辑的新闻
+        try:
+            news = News.query.get(news_id)
+        except Exception as e:
+            current_app.logger.error(e)
+            return jsonify(errno=response_code.RET.PARAMERR, errmsg='查询新闻数据失败')
+
+        if not news:
+            return jsonify(errno=response_code.RET.PARAMERR, errmsg='新闻不存在')
+
+        # 2.4 读取和上传图片
+        if index_image:
+            try:
+                index_image = index_image.read()
+            except Exception as e:
+                current_app.logger.error(e)
+                return jsonify(errno=response_code.RET.PARAMERR, errmsg='读取新闻数据失败')
+
+            # 2.5 将标题图片上传到七牛
+            try:
+                key = upload_file(index_image)
+            except Exception as e:
+                current_app.logger.error(e)
+                return jsonify(errno=response_code.RET.THIRDERR, errmsg='上传失败')
+
+            news.index_image_url = constants.QINIU_DOMIN_PREFIX + key
+
+        # 2.6 保存数据并同步到数据库
+        news.title = title
+        news.digest = digest
+        news.content = content
+        news.category_id = category_id
+
+        try:
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            current_app.logger.error(e)
+            return jsonify(errno=response_code.RET.DBERR, errmsg='保存数据失败')
+
+        # 2.7 响应结果
+        return jsonify(errno=response_code.RET.OK, errmsg='OK')
+
+@admin_blue.route('/news_edit')
+def news_edit():
+    '''新闻版式编辑列表'''
+    page = request.args.get("p", 1)
+    keyword = request.args.get("keyword")
+    try:
+        page = int(page)
+    except Exception as e:
+        current_app.logger.error(e)
+        page = 1
+
+    news_list = []
+    current_page = 1
+    total_page = 1
+
+    try:
+        if keyword:
+            paginate = News.query.filter(News.title.contains(keyword), News.status == 0).order_by(
+                News.create_time.desc()).paginate(page, constants.ADMIN_NEWS_PAGE_MAX_COUNT, False)
+        else:
+            paginate = News.query.filter(News.status == 0).order_by(News.create_time.desc()).paginate(page,
+                                                                                                      constants.ADMIN_NEWS_PAGE_MAX_COUNT,
+                                                                                                      False)
+
+        news_list = paginate.items
+        current_page = paginate.page
+        total_page = paginate.pages
+    except Exception as e:
+        current_app.logger.error(e)
+
+    news_dict_list = []
+    for news in news_list:
+        news_dict_list.append(news.to_review_dict())
+
+    context = {
+        "total_page": total_page,
+        "current_page": current_page,
+        "news_list": news_dict_list
+    }
+
+    return render_template('admin/news_edit.html', context=context)
 
 @admin_blue.route('/news_review_action',methods=['POST'])
 def news_review_action():

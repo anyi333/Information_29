@@ -1,13 +1,94 @@
 # 个人中心
+from flask import abort
 from flask import current_app
 from flask import g,redirect,url_for,render_template, jsonify,request,session
 from info import constants
 from info import response_code, db
-from info.models import Category, News
+from info.models import Category, News, User
 from info.utils.file_storage import upload_file
 from . import user_blue
 from info.utils.comment import user_login_data
 
+
+@user_blue.route('other_info')
+@user_login_data
+def other_info():
+    '''用户关注的其他用户的概况'''
+    # 获取登录用户信息
+    login_user = g.user
+    if not login_user:
+        return redirect(url_for('index.index'))
+
+    # 获取登录用户关注的用户信息
+    other_id = request.args.get('user_id')
+    if not other_id:
+        abort(404)
+
+    # 查询要展示的被关注的用户信息
+    other = None
+    try:
+        other = User.query.get(other_id)
+    except Exception as e:
+        current_app.logger.error(e)
+        abort(404)
+    if not other:
+        is_followed = True
+
+    context = {
+        'user':login_user.to_dict(),
+        'other':other.to_dict(),
+        'is_followed':is_followed
+    }
+
+    return render_template('news/other.html',context=context)
+
+
+@user_blue.route('user_followed')
+@user_login_data
+def user_followed():
+    '''我的关注'''
+
+    # 1.获取登录用户信息
+    login_user = g.user
+    if not login_user:
+        return redirect(url_for('index.index'))
+
+    # 2.接收参数
+    page = request.args.get('p','1')
+
+    # 3.检验参数
+    try:
+        page = int(page)
+    except Exception as e:
+        current_app.logger.error(e)
+        page = '1'
+
+    # 4.查询登录用户关注的用户信息
+    followed_user_list = []
+    total_page = 1
+    current_page = 1
+    try:
+        paginate = login_user.followed.paginate(page, constants.USER_FOLLOWED_MAX_COUNT, False)
+        followed_user_list = paginate.items
+        total_page = paginate.pages
+        current_page = paginate.page
+    except Exception as e:
+        current_app.logger.error(e)
+        abort(404)
+
+     # 5.构造渲染数据
+    followed_dict_list = []
+    for followed_user in followed_user_list:
+        followed_dict_list.append(followed_user.to_dict())
+
+    context = {
+        'users':followed_dict_list,
+        'total_page':total_page,
+        'current_page':current_page
+    }
+
+    # 6.响应结果
+    return render_template('news/user_follow.html',context=context)
 
 @user_blue.route('/news_list')
 @user_login_data
