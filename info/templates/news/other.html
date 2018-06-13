@@ -47,24 +47,19 @@
                 <h3>他的文章</h3>
                 <ul class="article_list">
                     <li><a href="#">智能音箱“不智能”：这次轮到三星语音助手Bixby被吐槽了</a><span>2018-1-17</span></li>
-                    <li><a href="#">智能音箱“不智能”：这次轮到三星语音助手Bixby被吐槽了</a><span>2018-1-17</span></li>
-                    <li><a href="#">智能音箱“不智能”：这次轮到三星语音助手Bixby被吐槽了</a><span>2018-1-17</span></li>
-                    <li><a href="#">智能音箱“不智能”：这次轮到三星语音助手Bixby被吐槽了</a><span>2018-1-17</span></li>
-                    <li><a href="#">智能音箱“不智能”：这次轮到三星语音助手Bixby被吐槽了</a><span>2018-1-17</span></li>
-                    <li><a href="#">智能音箱“不智能”：这次轮到三星语音助手Bixby被吐槽了</a><span>2018-1-17</span></li>
                 </ul>
                 <div id="pagination" class="page"></div>
                 <script>
-                    $(function(){
-                        $("#pagination").pagination({
-                            currentPage: 2,
-                            totalPage: 3,
-                            callback: function(current) {
-                                alert('ok!');
-                            }
-                        });
+                $(function() {
+                    $("#pagination").pagination({
+                        currentPage: {{ context.current_page }},
+                        totalPage: {{ context.total_page }},
+                        callback: function(current) {
+                            window.location = '/user/other_news_list?p=' + current;
+                        }
                     });
-                </script>
+                });
+            </script>
             </div>
         </div>
     </div>

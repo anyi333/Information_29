@@ -10,7 +10,59 @@ from . import user_blue
 from info.utils.comment import user_login_data
 
 
-@user_blue.route('other_info')
+@user_blue.route('/other_news_list')
+@user_login_data
+def other_news_list():
+    '''关注其他用户的新闻列表'''
+
+    # 1.获取页数
+    page = request.args.get('p','1')
+    other_id = request.args.get('user_id')
+
+    # 2.校验参数
+    try:
+        p = int(page)
+    except Exception as e:
+        return jsonify(errno=response_code.RET.PARAMERR,errmsg='参数错误')
+    if not all([page,other_id]):
+        return jsonify(errno=response_code.RET.PARAMERR,errmsg='缺少参数')
+
+    # 3.查询用户数据
+    try:
+        user = User.query.get(other_id)
+    except Exception as e:
+        current_app.logger.error(e)
+        return jsonify(errno=response_code.RET.DBERR,errmsg='查询用户数据失败')
+    if not user:
+        return jsonify(errno=response_code.RET.NODATA,errmsg='用户不存在')
+
+    # 4.分页查询
+    try:
+        paginate = News.query.filter(News.user_id == user.id).paginate(p, constants.OTHER_NEWS_PAGE_MAX_COUNT, False)
+        # 获取当前页数据
+        news_list =paginate.items
+        current_page = paginate.page
+        total_page = paginate.pages
+    except Exception as e:
+        current_app.logger.error(e)
+        return jsonify(errno=response_code.RET.DBERR, errmsg='查询用户数据失败')
+
+    # 5.构造响应数据
+    news_dict_list = []
+    for news_item in news_list:
+        news_dict_list.append(news_item.to_review_dict())
+
+    data = {
+        "news_list": news_dict_list,
+        "total_page": total_page,
+        "current_page": current_page
+    }
+
+    # 6.渲染界面
+    return jsonify(errno=response_code.RET.OK, errmsg='OK', data=data)
+
+
+@user_blue.route('/other_info')
 @user_login_data
 def other_info():
     '''用户关注的其他用户的概况'''
@@ -32,7 +84,13 @@ def other_info():
         current_app.logger.error(e)
         abort(404)
     if not other:
-        is_followed = True
+        abort(404)
+
+    # 判断关注和取消关注的显示
+    is_followed = False
+    if login_user and other:
+        if other in login_user.followed:
+            is_followed = True
 
     context = {
         'user':login_user.to_dict(),
